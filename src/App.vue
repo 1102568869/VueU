@@ -15,7 +15,7 @@
 
       <el-container>
         <el-aside width="200px">
-          <el-menu :default-openeds="['1']">
+          <el-menu :default-openeds="['1','3']">
             <el-submenu index="1">
               <template slot="title"><i class="el-icon-message"></i>文章</template>
               <router-link to="/ArticlePublish">
@@ -30,6 +30,19 @@
               <template slot="title"><i class="el-icon-message"></i>评论</template>
               <el-menu-item index="2-1">管理评论</el-menu-item>
             </el-submenu>
+            <el-submenu index="3">
+              <template slot="title"><i class="el-icon-message"></i>demo</template>
+              <router-link to="/Demo">
+                <el-menu-item index="3-1">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">杂例</span>
+                </el-menu-item>
+              </router-link>
+              <el-menu-item index="3-2" @click="chooseToShow">
+                <i class="el-icon-setting"></i>
+                <span slot="title">路由</span>
+              </el-menu-item>
+            </el-submenu>
           </el-menu>
         </el-aside>
         <el-main>
@@ -41,6 +54,35 @@
 </template>
 
 <script>
+  /* eslint-disable */
+
+
+  export default {
+    name: 'demo',
+    data() {
+      return {
+      }
+    },
+    methods: {
+      chooseToShow() {
+        this.$prompt('请输入需要查看的用户名', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern: /^.+$/,
+          inputErrorMessage: '用户名不能为空'
+        }).then(({value}) => {
+          this.$router.push({name: 'RouterDemoOne', params: {'userName': value}});
+        }).catch((e) => {
+          console.error(e)
+          this.$message({
+            type: 'info',
+            message: '取消输入'
+          });
+        });
+      }
+    }
+  }
+
 
 </script>
 <style>
